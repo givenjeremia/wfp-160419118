@@ -31,4 +31,4 @@ Detail Transaction
         </div>
     </div>
 </div>
-@endsection
+@endsection 
