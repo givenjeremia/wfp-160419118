@@ -10,4 +10,9 @@ class Product extends Model
     public function category(){
         return $this->belongsTo('App\Category','category_id');
     }
+
+    public function transactions(){
+        return $this->belongsToMany('App\Transaction','product_transaction','transaction_id','products_id')->withPivot('quantity','price');
+    }
+    
 }

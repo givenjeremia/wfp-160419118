@@ -566,6 +566,19 @@ License: You must have a valid license purchased only from themeforest(the above
 						</li>
 					</ul>
 				</li>
+				<li >
+					<a href="javascript:;">
+					<i class=" icon-notebook"></i>
+					<span class="title">Transaction</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="/transaction">
+							List Transaction</a>
+						</li>
+					</ul>
+				</li>
 				<li class="last ">
 					<a href="login.html">
 					<i class="icon-user"></i>

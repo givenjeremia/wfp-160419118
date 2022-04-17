@@ -47,6 +47,12 @@ Route::get('layout', function(){
     
 });
 
+
+//Week 8
+Route::resource('transaction', TransactionController::class);
+Route::post('/transaction/showDataAjax','TransactionController@showAjax')->name('transaction.showAjax');
+Route::get('/transaction/detailtransaction/{id}', 'TransactionController@detailtransaction')->name('TransactionDetail');
+
 //Week 7
 
 Route::post('/products/showInfo','ProductController@showInfo')->name('products.showInfo');
