@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Buyer;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TransactionController extends Controller
 {
@@ -29,6 +32,7 @@ class TransactionController extends Controller
     public function create()
     {
         //
+        return view('transaction.create',['buyer'=>Buyer::all() , 'user'=>User::all()]);
     }
 
     /**
@@ -40,6 +44,13 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->get('transaction_detai'));
+        $data = new Transaction();
+        $data->user_id = $request->get('user');
+        $buyer_new = Buyer::find($request->get('buyer'));
+        $buyer_new->user()->save($data);
+        return redirect()->route('producttransaction.create')->with('id_transaction', $data->id);
+        // return redirect()->route('producttransaction.create',['id' => $data->id]);
     }
 
     /**

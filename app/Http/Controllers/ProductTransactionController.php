@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Buyer;
+use App\Product;
+use App\Transaction;
+use App\ProductTransaction;
 use Illuminate\Http\Request;
 
-class BuyerController extends Controller
+class ProductTransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -24,7 +26,7 @@ class BuyerController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaction.create_product_transaction' , ['products'=>Product::all() , 'transactions'=>Transaction::all()]);
     }
 
     /**
@@ -36,15 +38,19 @@ class BuyerController extends Controller
     public function store(Request $request)
     {
         //
+        $id_transaction = $request->get('id_transaction');
+        $transaction = Transaction::find($id_transaction);
+        $transaction->products()->attach($request->get('product'), ['price' => $request->get('product_price') , 'quantity'=>$request->get('quantity') ]);
+        return redirect()->route('producttransaction.create')->with('id_transaction', $id_transaction);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\ProductTransaction  $productTransaction
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $buyer)
+    public function show(ProductTransaction $productTransaction)
     {
         //
     }
@@ -52,10 +58,10 @@ class BuyerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\ProductTransaction  $productTransaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buyer $buyer)
+    public function edit(ProductTransaction $productTransaction)
     {
         //
     }
@@ -64,10 +70,10 @@ class BuyerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Buyer  $buyer
+     * @param  \App\ProductTransaction  $productTransaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $buyer)
+    public function update(Request $request, ProductTransaction $productTransaction)
     {
         //
     }
@@ -75,10 +81,10 @@ class BuyerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\ProductTransaction  $productTransaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $buyer)
+    public function destroy(ProductTransaction $productTransaction)
     {
         //
     }

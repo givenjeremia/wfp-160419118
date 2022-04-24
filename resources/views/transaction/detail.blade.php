@@ -22,8 +22,6 @@ Detail Transaction
                         <p>Category : <b>{{ $item->category->name }} </b></p>
                         <p>Price : <b>{{ number_format($item->product_price,2) }}</b> </p>
                         <p>Jumlah Beli : <b>{{ $item->pivot->quantity }}</b> </p>
-                        
-                        
                     </div>
                 </div>
             </div>

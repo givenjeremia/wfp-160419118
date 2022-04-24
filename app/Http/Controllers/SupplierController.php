@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Buyer;
+use App\Supplier;
 use Illuminate\Http\Request;
 
-class BuyerController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,10 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        
+        //
+        $data = Supplier::all();
+        $jumlah = $data->count();
+        return view('supplier.index',['data'=>$data,'jumlah'=>$jumlah]);
     }
 
     /**
@@ -25,6 +28,7 @@ class BuyerController extends Controller
     public function create()
     {
         //
+        return view('supplier.create');
     }
 
     /**
@@ -36,15 +40,22 @@ class BuyerController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Supplier();
+        $data->name = $request->get('name');
+        $data->address = $request->get('address');
+        $data->save();
+
+        return redirect()->route('supplier.index')->with('status', 'Success Create '.$request->get('name').' Supplier' );
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $buyer)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -52,10 +63,10 @@ class BuyerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buyer $buyer)
+    public function edit(Supplier $supplier)
     {
         //
     }
@@ -64,10 +75,10 @@ class BuyerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Buyer  $buyer
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $buyer)
+    public function update(Request $request, Supplier $supplier)
     {
         //
     }
@@ -75,10 +86,10 @@ class BuyerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $buyer)
+    public function destroy(Supplier $supplier)
     {
         //
     }

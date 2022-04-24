@@ -47,6 +47,10 @@ Route::get('layout', function(){
     
 });
 
+//Week 9
+Route::resource('supplier', 'SupplierController');
+Route::resource('producttransaction', 'ProductTransactionController');
+
 
 //Week 8
 Route::resource('transaction', TransactionController::class);

@@ -507,6 +507,24 @@ License: You must have a valid license purchased only from themeforest(the above
 						</li>
 					</ul>
 				</li>
+
+				<li >
+					<a href="javascript:;">
+					<i class=" icon-folder"></i>
+					<span class="title">Category</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="/kategori_obat/create">New Category</a>
+						</li>
+						<li>
+							<a href="/kategori_obat">
+							Categories</a>
+						</li>
+					</ul>
+				</li>
+
 				<li >
 					<a href="javascript:;">
 					<i class=" icon-folder"></i>
@@ -515,8 +533,8 @@ License: You must have a valid license purchased only from themeforest(the above
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="/kategori_obat">
-							Categories</a>
+							<a href="/obat/create">
+							New Product</a>
 						</li>
 						<li>
 							<a href="/obat">
@@ -574,11 +592,32 @@ License: You must have a valid license purchased only from themeforest(the above
 					</a>
 					<ul class="sub-menu">
 						<li>
+							<a href="/transaction/create">
+							New Transaction</a>
+						</li>
+						<li>
 							<a href="/transaction">
 							List Transaction</a>
 						</li>
 					</ul>
 				</li>
+
+				<li >
+					<a href="javascript:;">
+					<i class=" icon-notebook"></i>
+					<span class="title">Supliers</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="/supplier/create">New Supplier</a>
+						</li>
+						<li>
+							<a href="/supplier">Suppliers</a>
+						</li>
+					</ul>
+				</li>
+
 				<li class="last ">
 					<a href="login.html">
 					<i class="icon-user"></i>
@@ -595,6 +634,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div class="page-content">
 			<a class="btn btn-default" data-toggle="modal" href="#disclaimer">Disclaimer</a>
 			<br>
+			@if (session('status'))
+				<div class="alert alert-success">
+					{{ session('status') }}
+				</div>
+			@endif
 			@yield('content')
 		</div>
 	</div>

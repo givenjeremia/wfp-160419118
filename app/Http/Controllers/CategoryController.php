@@ -21,6 +21,17 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        return view('category.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -29,6 +40,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Category();
+        $data->name = $request->get('name');
+        $data->save();
+
+        return redirect()->route('kategori_obat.index')->with('status', 'Success Create '.$request->get('name').' Category' );
+
     }
 
     /**
