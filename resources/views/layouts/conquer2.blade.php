@@ -44,9 +44,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{ asset('conquer2/css/pages/tasks.css') }}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('conquer2/css/themes/default.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="{{ asset('conquer2/css/custom.css') }}" rel="stylesheet" type="text/css"/>
+<script src="{{ asset('js/jquery.editable.min.js')}}" type="text/javascript"></script>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
-@yield('js')
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -421,7 +422,14 @@ License: You must have a valid license purchased only from themeforest(the above
 			<li class="dropdown user">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<img alt="" src="{{ asset('conquer2/img/avatar3_small.jpg') }}"/>
-				<span class="username username-hide-on-mobile">Nick </span>
+				
+				<span class="username username-hide-on-mobile"> 
+					@if(Auth::user())
+						{{ Auth::user()->name }}
+					@else
+						Anda Belum Login
+					@endif
+				</span>
 				<i class="fa fa-angle-down"></i>
 				</a>
 				<ul class="dropdown-menu">
@@ -444,7 +452,16 @@ License: You must have a valid license purchased only from themeforest(the above
 					<li class="divider">
 					</li>
 					<li>
-						<a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+						@if(Auth::user())
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+							@csrf
+							<input type="submit" class="btn btn-danger" value="Logout">
+						</form>
+							
+						@else
+							<a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+						@endif
+						{{-- <a href="login.html"><i class="fa fa-key"></i> Log Out</a> --}}
 					</li>
 				</ul>
 			</li>
@@ -711,6 +728,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{ asset('conquer2/scripts/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('conquer2/scripts/index.js') }}" type="text/javascript"></script>
 <script src="{{ asset('conquer2/scripts/tasks.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.editable.min.js')}}" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {    
@@ -728,6 +746,8 @@ jQuery(document).ready(function() {
 });
 </script>
 <!-- END JAVASCRIPTS -->
+@yield('js')
+{{-- @yield('initialscrit') --}}
 </body>
 <!-- END BODY -->
 </html>

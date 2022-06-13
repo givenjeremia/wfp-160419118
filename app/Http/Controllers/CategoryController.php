@@ -60,15 +60,33 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($category)
+    {
+        
+        $category = Category::find($category);
+        // dd($category);
+        return view('category.edit',['category' => $category]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $category)
     {
-        //
+        $category = Category::find($category);
+        // dd($category);
+        $category->name = $request->get('name');
+        $category->save();
+        return redirect()->route('kategori_obat.index')->with('status', 'Success Update '.$request->get('name').' Category' );
     }
 
     /**

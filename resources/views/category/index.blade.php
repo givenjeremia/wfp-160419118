@@ -15,6 +15,7 @@ Categories
         <th>No</th>
         <th>Category Name</th>
         <th>Product List</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -32,6 +33,14 @@ Categories
                 <li>{{ $value->generic_name }}</li>
               @endforeach
           </ul>
+        </td>
+        <td>
+          <a href="{{ route('kategori_obat.edit', $item->id) }}" class="btn btn-success">UPDATE</a>
+          <form action="{{ route('kategori_obat.destroy', $item->id) }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">DELETE</button>
+          </form>
         </td>
       </tr>
       @php

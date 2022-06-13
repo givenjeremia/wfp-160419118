@@ -6,7 +6,8 @@ use App\User;
 use App\Buyer;
 use App\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -118,6 +119,33 @@ class TransactionController extends Controller
         // dd($product);
         
         return view('transaction.detail',['data'=>$data,'products'=>$products]);
+    }
+
+    public function submit_front()
+    {
+        // dd('hallo');
+        // $this->authorize('checkmember');
+        $this->authorize('checkmember');
+        $cart = session()->get('cart');
+        $user = Auth::user();
+
+        
+        $t = new Transaction;
+        $t->users_id = $user->id;
+        $t->transaction_date = Carbon::now()->toDatetimeString();
+        $t->save();
+        $total_harga = $t->insertProduct($cart,$user);
+        // dd($total_harga);
+        $t->total = $total_harga;
+        $t->save();
+        session()->forget('cart');
+        return redirect('home');        
+    }
+
+    public function form_submit_front()
+    {
+        $this->authorize('checkmember');
+        return view("frontend.checkout");
     }
 
 }

@@ -102,15 +102,42 @@ class ProductController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($product)
+    {
+        // dd($product);
+        // $product = Product::find($product);
+        // dd($product);
+        return view('product.edit',['product' => Product::find($product), 'category' =>Category::All()]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
         //
+        $product = Product::find($product);
+        // dd($product);
+        $product->generic_name = $request->get('generic_name');
+        $product->description = $request->get('desc');
+        $product->form = $request->get('form');
+        $product->restriction_formula = $request->get('restriction_formula');
+        $product->faskes_tk1 = !empty($request->get('faskes_tk1'))  ? 1 : 0; 
+        $product->faskes_tk2 = !empty($request->get('faskes_tk2'))  ? 1 : 0; 
+        $product->faskes_tk3 = !empty($request->get('faskes_tk3'))  ? 1 : 0; 
+        $product->product_price = $request->get('product_price');
+        $category_new = Category::find($request->get('category'));
+        $category_new->products()->save($product);
+        return redirect()->route('obat.index')->with('status', 'Success Update '.$request->get('generic_name').' Product' );
     }
 
     /**
@@ -119,9 +146,19 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product)
     {
         //
+        $product = Product::find($product);
+        $this->authorize('delete-permission',$product);
+        // dd($product);
+        try {    
+            $product->delete();
+            return redirect()->route('obat.index')->with('status', 'Success Delete Product' );  
+        } catch (\Throwable $th) {
+            $msg = "Product Gagal Di Hapus. Pastikan Data Child SUdah Hilang Atau Tidak Behubungan";
+            return redirect()->route('obat.index')->with('status', 'Error '.$msg );  
+        }
     }
 
     public function showInfo()
@@ -129,10 +166,43 @@ class ProductController extends Controller
         return response()->json(array(
             'status'=>'oke',
             'msg'=>"<div class='alert alert-info'>
-            Did you know? <br>This message is sent by a Controller.'</div>"
+            Did you know? <br>This message is sent by a Control ler.'</div>"
         ),200);
     }
 
+    public function front_index()
+    {
+        $list_data = Product::all();
+        // dd($list_data);
+        return view('frontend.product',['products'=>$list_data]);
+    }
     
+    public function addToCart($id)
+    {
+        $product = Product::find($id);
+        $cart = session()->get("cart");
+        if(!isset($cart[$id])){
+            $cart[$id] = [
+                "name" => $product->generic_name,
+                "quantity" => 1,
+                "price" => $product->product_price,
+                "photo" => $product->image
+            ];
+        }
+        else{
+            $cart[$id]["quantity"]++;
+        }
+        session()->put("cart", $cart);
+        return redirect()->back()->with("status","Product added to cart successfully!");
+
+    }
+
+
+    public function cart()
+    {
+        // dd("Ha;;p");
+        $this->authorize('checkmember');
+        return view("frontend.cart");
+    }
 
 }

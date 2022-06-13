@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.conquer2');
-});
+// Route::get('/', function () {
+//     return view('layouts.conquer2');
+// });
 Route::view('/welcome','welcome');
 
 Route::post('given', function () {
@@ -38,7 +38,6 @@ Route::get('greeting', function(){
 });
 
 //Week 4
-Route::resource('obat', ProductController::class);
 Route::resource('kategori_obat', CategoryController::class);
 
 //Week 6
@@ -47,15 +46,47 @@ Route::get('layout', function(){
     
 });
 
-//Week 9
-Route::resource('supplier', 'SupplierController');
-Route::resource('producttransaction', 'ProductTransactionController');
+//Week 14
+Route::get('/', 'ProductController@front_index');
+Route::get('/cart', 'ProductController@cart');
+Route::get('/add-to-cart/{id}', 'ProductController@addToCart');
+Route::get('/checkout', 'TransactionController@form_submit_front')->middleware(['auth']);
+Route::get('/submit_checkout', 'TransactionController@submit_front')->name('submitcheckout')->middleware(['auth']);
 
 
-//Week 8
-Route::resource('transaction', TransactionController::class);
-Route::post('/transaction/showDataAjax','TransactionController@showAjax')->name('transaction.showAjax');
-Route::get('/transaction/detailtransaction/{id}', 'TransactionController@detailtransaction')->name('TransactionDetail');
+
+//Week 13
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function(){
+    //Week 11
+    Route::post('/supplier/getEditForm','SupplierController@getEditForm')->name('supplier.getEditForm');
+    Route::post('/supplier/getEditForm2','SupplierController@getEditForm2')->name('supplier.getEditForm2');
+    Route::post('/supplier/saveData','SupplierController@saveData')->name('supplier.saveData');
+    Route::post('/supplier/deleteData','SupplierController@deleteData')->name('supplier.deleteData');
+    Route::post('/supplier/saveDataField','SupplierController@saveDataField')->name('supplier.saveDataField');
+    Route::post('/supplier/changeLogo','SupplierController@changeLogo')->name('supplier.changeLogo');
+
+    //Week 9
+    Route::resource('supplier', 'SupplierController');
+    
+    Route::resource('obat', ProductController::class);
+
+    //Week 8
+    Route::resource('transaction', TransactionController::class);
+    Route::post('/transaction/showDataAjax','TransactionController@showAjax')->name('transaction.showAjax');
+    Route::get('/transaction/detailtransaction/{id}', 'TransactionController@detailtransaction')->name('TransactionDetail');
+    
+    //Week 9
+    Route::resource('producttransaction', 'ProductTransactionController');
+});
+
+//Week 11
+
+
+
 
 //Week 7
 
@@ -249,5 +280,7 @@ Route::get('equipments/{id}', function($id){
     ); 
 });
 
+
+ 
 
 

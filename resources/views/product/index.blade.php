@@ -88,6 +88,7 @@ Product
         <th>Faskes 2</th>
         <th>Faskes 3</th>
         <th>Price</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -95,7 +96,7 @@ Product
       <tr class="{{ ($key % 2 === 0) ? 'active' : 'success' }}">
         <th scope="row">{{ $item->id }}</th>
         <td>
-          <a class="btn btn-default" data-toggle="modal" href="#detail_{{$item->id}}">
+          <a class="btn btn-default edittable" data-toggle="modal" href="#detail_{{$item->id}}">
             {{ $item->generic_name }}
           </a>
           <div class="modal fade" id="detail_{{$item->id}}" tabindex="-1" role="basic" aria-hidden="true">
@@ -160,8 +161,17 @@ Product
               </div>
             </div>
           </div>
-
-
+        </td>
+        <td>
+          <a href="{{ route('obat.edit', $item->id) }}" class="btn btn-success">UPDATE</a>
+          @can('delete-permission', $item)
+          <form action="{{ route('obat.destroy', $item->id) }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">DELETE</button>
+          </form>
+              
+          @endcan
         </td>
       </tr>
       @endforeach

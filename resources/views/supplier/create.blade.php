@@ -10,8 +10,7 @@ Create Supplier
             NEW SUPPLIER
         </div>
         <div class="portlet-body form">
-            <!-- BEGIN FORM-->
-            <form action="{{ route('supplier.store') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <!-- BEGIN FORM--><form action="{{ route('supplier.store') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-body">
                     <div class="form-group">
@@ -27,7 +26,13 @@ Create Supplier
                             <input type="text" name="address" class="form-control" placeholder="Address" required>
                         </div>
                     </div>
-                    
+                    <div class="form-group">
+                        <label class="control-label col-md-1">Logo</label>
+                        <div class="col-md-9">
+                            <input type="file" name="logo" class="form-control" id="logo" required>
+                        </div>
+                    </div>
+    
                 </div>
                 <div class="form-actions">
                     <div class="row">
@@ -44,6 +49,7 @@ Create Supplier
                     </div>
                 </div>
             </form>
+            
             <!-- END FORM-->
         </div>
     </div>
